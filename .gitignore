@@ -1,0 +1,19 @@
+# Ignore compiled object files
+*.o
+*.obj
+
+# Ignore dependency directories
+node_modules
+vcpkg
+
+# Ignore environment variables files
+.env
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+
+.vscode
