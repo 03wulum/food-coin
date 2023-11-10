@@ -1,8 +1,14 @@
 #include "block.h"
 #include <openssl/sha.h>
 #include <sstream>
+#include <iomanip>
+
+// extern "C" {
+// #include <openssl/sha.h>
+// }
 
 Block::Block(int index, std::string previousHash, std::vector<std::string> transactions, long timestamp, int nonce) {
+    this->index = index;
     this->previousHash = previousHash;
     this->transactions = transactions;
     this->timestamp = timestamp;
@@ -11,6 +17,27 @@ Block::Block(int index, std::string previousHash, std::vector<std::string> trans
     this->hash = calculateHash();
 
 }
+
+// std::string Block::calculateHash() {
+//     std::string source = this->previousHash;
+//     for(const auto& transaction : this->transactions) {
+//         source += transaction;
+//     }
+//     source += std::to_string(this->nonce) + std::to_string(this->timestamp);
+
+//     std::string digest;
+//     CryptoPP::SHA256 hash;
+
+//     CryptoPP::StringSource s(source, true, 
+//         new CryptoPP::HashFilter(hash, 
+//             new CryptoPP::HexEncoder(
+//                 new CryptoPP::StringSink(digest)
+//             ) // HexEncoder
+//         ) // HashFilter
+//     ); // StringSource
+
+//     return digest;
+// }
 
 std::string Block::calculateHash() {
     //SHA context to hold state of the computation
@@ -24,24 +51,26 @@ std::string Block::calculateHash() {
     /**
      * update sha structure with each transaction in the block
     */
-    for(std::string transaction : this-> transactions) {
+    for(std::string transaction : this->transactions) {
         //size to get length of string
         SHA256_Update(&sha256, transaction.c_str(), transaction.size());
     }
     //& operators is used to get the address of the variables.
-    SHA256_Update(&sha256, &this->nonce.c_str(), sizeof(this->nonce));
-    SHA256_Update(&sha256, &this->timestamp.c_str(), sizeof(this->timestamp.size()));
+    // cast int variables, nonce and timestamp, to characters before passing to sha update
+    SHA256_Update(&sha256, (char*)&this->nonce, sizeof(this->nonce));
+    SHA256_Update(&sha256, (char*)&this->timestamp, sizeof(this->timestamp));
 
     //store the digest, or resulting hash in an array; #32 bytes for SHA-256
     unsigned char hash[SHA256_DIGEST_LENGTH];
 
     //finalize hash computation, culminating in the update of the hash array
-    SHA256_FINAL(hash, &sha256);
+    SHA256_Final(hash, &sha256);
 
     //creates string stream to convert hash array from binary to hexadecimal string
     std::stringstream ss;
 
-    for(int i = 0; i < SHA256_DIGEST_LENGTH.length; i++) {
+    //convert binary sha256 hash to its hexadecimal representaion, a string representing the hash
+    for(int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
         ss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
     }
 
