@@ -4,8 +4,7 @@
 #include <string>
 #include <vector>
 
-class Block
-{
+class Block {
 public:
     int index;
     std::string previousHash;
@@ -18,6 +17,5 @@ public:
 
     // method for calculating block hash
     std::string calculateHash();
-}
-
+};
 #endif
