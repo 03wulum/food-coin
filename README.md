@@ -1,4 +1,4 @@
-# Welcome to the Food Coin Project
+# Welcome to the FoodCoin Project
 
 ## The aim of this cryptocurrency is to end world hunger.
 

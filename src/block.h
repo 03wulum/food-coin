@@ -17,5 +17,8 @@ public:
 
     // method for calculating block hash
     std::string calculateHash();
+
+    //method to retrieve hash of block
+    std::string getHash();
 };
 #endif

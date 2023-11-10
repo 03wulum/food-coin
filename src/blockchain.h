@@ -12,5 +12,5 @@ public:
     Block getLatestBlock();
 
     //declare getChain function
-    std::Vector<Block> getChain();
+    std::vector<Block> getChain();
 };

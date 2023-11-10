@@ -76,3 +76,7 @@ std::string Block::calculateHash() {
 
     return ss.str();
 }
+
+std::string Block:: getHash() {
+    return this->hash;
+}
