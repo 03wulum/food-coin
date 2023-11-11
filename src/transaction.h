@@ -11,6 +11,9 @@ public:
 
     Transaction(std::string sender, std::string receiver, int amount);
     std::string toString();
+    void sign(std::string privateKey);
+    double getAmount();
+    void setFee(double fee);
 };
 
 #endif
