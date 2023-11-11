@@ -9,7 +9,7 @@ int main() {
     Blockchain blockchain;
 
     // Create a new wallet.
-    Wallet wallet("WalletAddress");
+    Wallet wallet("WalletAddress", "gfuidhgufidgu3f");
 
     // Create a new transaction.
     Transaction transaction("senderAddress", "receiverAddress", 100);

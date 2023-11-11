@@ -1,4 +1,5 @@
 #include "blockchain.h"
+#include <ctime>
 
 Blockchain::Blockchain() {
     // add genesis block
@@ -22,7 +23,7 @@ int Blockchain::getChainLength() {
 }
 
 Block Blockchain::getLatestBlock() {
-    return chain.back()
+    return chain.back();
 }
 
 // chain getter function

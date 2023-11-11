@@ -10,6 +10,10 @@ void Wallet::addTransaction(Transaction transaction) {
     balance += transaction.getAmount();
 }
 
+void Wallet::broadcastTransaction(const Transaction& transaction) {
+
+}
+
 void Wallet::sendTransaction(Transaction transaction) {
     // first sign transaction
     transaction.sign(this->privateKey);

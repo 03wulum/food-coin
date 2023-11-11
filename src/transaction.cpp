@@ -4,7 +4,7 @@
 #include <openssl/pem.h>
 #include <openssl/rsa.h>
 
-Transaction::Transaction(std::string sender, std::string receiver, int amount) {
+Transaction::Transaction(std::string sender, std::string receiver, double amount) {
     this->sender = sender;
     this->receiver = receiver;
     this->amount = amount; 
@@ -23,9 +23,9 @@ void Transaction::sign(std::string privateKey) {
 }
 
 double Transaction::getAmount() {
-    return this->amount
+    return this->amount;
 }
-double Transaction::setFee(double fee) {
-    return fee + 0.00
+void Transaction::setFee(double fee) {
+    
 }
 

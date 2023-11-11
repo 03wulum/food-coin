@@ -9,7 +9,7 @@ public:
     std::string receiver;
     int amount;
 
-    Transaction(std::string sender, std::string receiver, int amount);
+    Transaction(std::string sender, std::string receiver, double amount);
     std::string toString();
     void sign(std::string privateKey);
     double getAmount();
