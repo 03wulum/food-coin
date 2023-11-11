@@ -1,5 +1,8 @@
 CXX = g++
-CXXFLAGS = -I./src
+CXXFLAGS = -I./src -I/path/to/openssl/includes
+
+LDFLAGS = -L/path/to/openssl/lib  # Path to OpenSSL libraries
+LDLIBS = -lssl -lcrypto  # Link against OpenSSL libraries
 
 all: food_coin_program
 
@@ -9,7 +12,7 @@ src/%.o: src/%.cpp
 
 # Link all .o files into the final executable
 food_coin_program: src/block.o src/wallet.o src/transaction.o src/blockchain.o src/main.o
-	$(CXX) $(CXXFLAGS) $^ -o $@
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS) $(LDLIBS)
 
 clean:
 	rm *.o food_coin_program

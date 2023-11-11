@@ -8,11 +8,12 @@ WORKDIR /app
 COPY . /app/src
 
 # Install any needed packages specified in requirements.txt
-RUN apt-get update && apt-get install -y \
-    libssl-dev \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y libssl-dev 
 
 RUN ls /app/src
+
+# before compiling, clean the environment, removes an existing object files and finl executable before starting build process 
+# RUN make clean -C /app/src
 # Compile the application
 RUN make -C /app/src
 
