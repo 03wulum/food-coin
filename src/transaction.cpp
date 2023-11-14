@@ -64,7 +64,8 @@ bool Transaction::sign(std::string privateKey) {
     BIO_free(bio);
 }
 
-double Transaction::getAmount() {
+// a const member function, it is telling us that amount
+double Transaction::getAmount() const {
     return this->amount;
 }
 void Transaction::setFee(double fee) {
