@@ -1,4 +1,6 @@
 #include "wallet.h"
+#include "stdexcept"
+#include <iostream> 
 
 //constructor, sets inital vlues to class meber during object instation
 // pasing address when object wallet is creatd, and set balance to 0
@@ -41,7 +43,7 @@ double Wallet::getBalance() {
 }
 double Wallet::calculateTransactionFee(const Transaction& transaction) {
     const double feePercent = 0.02;
-    return transaction.amount * feePercent;
+    return transaction.getAmount() * feePercent;
 }
 std::string Wallet::getAddress() {
     return address;
