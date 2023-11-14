@@ -12,7 +12,7 @@ private:
 public:
     Transaction(std::string sender, std::string receiver, double amount);
     std::string toString();
-    void sign(std::string privateKey);
+    bool sign(std::string privateKey);
     double getAmount() const;
     void setFee(double fee);
 };
