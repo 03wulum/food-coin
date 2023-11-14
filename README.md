@@ -4,6 +4,6 @@
 
 ### To do this, we will use a percentage of each transaction to donate to the global organizations whose main purpose is to feed the less fortunate.
 
-Build with docker
+Build/run with docker
 	docker build -t food_coin_program .
-	docker run -it --rm food_coin_program
+	docker run -it food_coin_program
