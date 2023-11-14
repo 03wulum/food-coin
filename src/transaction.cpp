@@ -18,7 +18,7 @@ std::string Transaction::toString() {
     return ss.str();
 }
 
-void Transaction::sign(std::string privateKey) {
+bool Transaction::sign(std::string privateKey) {
     //use EVP library from open ssl in declaring a pointer to EVO structure
     // hold state of message digest
     EVP_MD_CTX *mdctx = NULL;
@@ -42,16 +42,20 @@ void Transaction::sign(std::string privateKey) {
     //initial signing of digest
     //we set the mdctx (our hash?) to the EVPSHA-256 hash function;
     // and the private key to the pkey; checking eqaulity to 1 in openssl conventions is to see if successful
-    if(1 != EVP_DigestSignInit(mdctx, NULL, EVP_sha256(), NULL, pkey)) handleErrors();
+    CHECK_AND_HANDLE_ERRORif((1 != EVP_DigestSignInit(mdctx, NULL, EVP_sha256(), NULL, pkey)))
     //continue with update using message
-    if(1 != EVP_DigestSignUpdate(mdctx, msg.data(), msg.size())) handleErrors();
+    CHECK_AND_HANDLE_ERROR(if(1 != EVP_DigestSignUpdate(mdctx, msg.data(), msg.size())))
 
-    //this function finlizes signing
-    if(1 != EVP_DigestSignFinal(mdctx, NULL, &slen)) handleErrors();
+    //this function finalizes signing operation
+    // called initially with NUll sig paramater to obtain length of signature
+    CHECK_AND_HANDLE_ERROR(if(1 != EVP_DigestSignFinal(mdctx, NULL, &slen)))
     //allocate emory for signature based on size
     if(!(sig = (unsigned char*)OPENSSL_malloc(sizeof(unsigned char) * slen))) handleErrors();
 
     this-> signture = std::string((char*)sig, slen);
+
+    // Obtain the signature
+    CHECK_AND_HANDLE_ERROR(if(1 != EVP_DigestSignFinal(mdctx, sig, &slen)))
 
     //do a clean up; note even the BIO structure has a freeing method
     OPENSSL_free(sig);
@@ -64,6 +68,29 @@ double Transaction::getAmount() {
     return this->amount;
 }
 void Transaction::setFee(double fee) {
-    
+ if(fee < 0) {
+
+ }  else {
+    this->fee = fee;
+ } 
 }
 
+bool handleErrors(void) {
+    unsigned long errCode;
+    bool isError = false;
+
+    while(errCode = ERR_get_error()) {
+        char *err = Err_error_string(errCode, NULL);
+        std::cerr << "Error: " << err << std::endl;
+        isError = true;
+    }
+    return isError;
+}
+
+#define CHECK_AND_HANDLE_ERROR(op) if(!(op)) {
+    if(handleErrors()) {
+        return false;
+    }
+}
+
+//macro for error handling
