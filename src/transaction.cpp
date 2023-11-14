@@ -24,7 +24,7 @@ void Transaction::sign(std::string privateKey) {
     EVP_MD_CTX *mdctx = NULL;
     // *sigholds digital signture array
     unsigned char *sig = Null;
-    //hold the length of the signature
+    // length of the signature
     size_t slen;
 
     // create digest context
@@ -41,9 +41,23 @@ void Transaction::sign(std::string privateKey) {
 
     //initial signing of digest
     //we set the mdctx (our hash?) to the EVPSHA-256 hash function;
-    // and the private key to the pkey
+    // and the private key to the pkey; checking eqaulity to 1 in openssl conventions is to see if successful
     if(1 != EVP_DigestSignInit(mdctx, NULL, EVP_sha256(), NULL, pkey)) handleErrors();
-    
+    //continue with update using message
+    if(1 != EVP_DigestSignUpdate(mdctx, msg.data(), msg.size())) handleErrors();
+
+    //this function finlizes signing
+    if(1 != EVP_DigestSignFinal(mdctx, NULL, &slen)) handleErrors();
+    //allocate emory for signature based on size
+    if(!(sig = (unsigned char*)OPENSSL_malloc(sizeof(unsigned char) * slen))) handleErrors();
+
+    this-> signture = std::string((char*)sig, slen);
+
+    //do a clean up; note even the BIO structure has a freeing method
+    OPENSSL_free(sig);
+    EVP_MD_CTX_free(mdctx);
+    EVP_PKEY_free(pkeu);
+    BIO_free(bio);
 }
 
 double Transaction::getAmount() {
