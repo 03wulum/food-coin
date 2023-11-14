@@ -69,7 +69,7 @@ double Transaction::getAmount() {
 }
 void Transaction::setFee(double fee) {
  if(fee < 0) {
-
+    thre std::invalid_argument("Fee cannot be negative!")
  }  else {
     this->fee = fee;
  } 

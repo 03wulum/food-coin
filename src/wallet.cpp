@@ -21,7 +21,12 @@ void Wallet::sendTransaction(Transaction transaction) {
     double fee = calculateTransactionFee(transaction);
 
     // make sure fee is added to transaction
-    transaction.setFee(fee);
+    try{
+       transaction.setFee(fee); 
+    } catch(const std::invalid_argument& e) {
+        std::cerr << "Failed to set transaction fee: " << e.what() << std::endl;
+    }
+    
 
     //add the transaction to the wallet record
     addTransaction(transaction);
