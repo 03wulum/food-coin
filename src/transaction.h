@@ -6,6 +6,8 @@ class Transaction {
 private:
     std::string sender;
     std::string receiver;
+    std::string signature;
+    std::string msg;
     double amount;
     double fee;//this is the transaction fee
 
