@@ -25,6 +25,10 @@ int Blockchain::getChainLength() {
 Block Blockchain::getLatestBlock() {
     return chain.back();
 }
+Block Blockchain::mineBlock() {
+    // implement this correctly
+    return chain.back();
+}
 
 // chain getter function
 std::vector<Block> Blockchain::getChain() {

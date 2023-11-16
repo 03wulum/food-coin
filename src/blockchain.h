@@ -10,6 +10,7 @@ public:
     void addBlock(Block block);
     int getChainLength();
     Block getLatestBlock();
+    Block mineBlock();
 
     //declare getChain function
     std::vector<Block> getChain();
