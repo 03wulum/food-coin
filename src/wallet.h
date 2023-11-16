@@ -20,6 +20,7 @@ public:
     double calculateTransactionFee(const Transaction& transaction);
     std::string getAddress();
     std::vector<Transaction> getTransactions();
+    std::string generateNewAddress();
 };
 
 #endif

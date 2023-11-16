@@ -51,3 +51,6 @@ std::string Wallet::getAddress() {
 std::vector<Transaction> Wallet::getTransactions() {
     return transactions;
 }
+std::string Wallet::generateNewAddress() {
+    return "Your new address. mgjgrehg8h78hgre8";
+}
