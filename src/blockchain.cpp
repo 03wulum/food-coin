@@ -29,10 +29,21 @@ Block Blockchain::mineBlock() {
    //simplified mineblock function
    Block lastBlock = getLatestBlock();
 
+    //create new block with pending transactions
+    std::vector<std::string> transactionData;
+
+    for(const Transaction& transaction : pendingTransactions) {
+        transactionData.push_back(transaction)
+    }
+
    Block newBlock(getChainLength(), lastBlock.getHash(), newTransactions, time(0), 0);
 
     //add it to the blockchain
    addBlock(newBlock);
+   
+   //once pending transactions processed clear it from pool of transactions in this vector in order to prepare for next set of transactions
+   pendingTransactions.clear()
+
 
    return newBlock;
 }
