@@ -26,8 +26,15 @@ Block Blockchain::getLatestBlock() {
     return chain.back();
 }
 Block Blockchain::mineBlock() {
-    // implement this correctly
-    return chain.back();
+   //simplified mineblock function
+   Block lastBlock = getLatestBlock();
+
+   Block newBlock(getChainLength(), lastBlock.getHash(), newTransactions, time(0), 0);
+
+    //add it to the blockchain
+   addBlock(newBlock);
+
+   return newBlock;
 }
 
 // chain getter function
