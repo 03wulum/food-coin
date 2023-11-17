@@ -34,7 +34,7 @@ Transaction::Transaction(std::string sender, std::string receiver, double amount
 /**
  * convert transaction objects to strings;
 */
-std::string Transaction::toString() {
+std::string Transaction::toString() const{
     std::stringstream ss;
     ss << sender << receiver << amount;
     return ss.str();

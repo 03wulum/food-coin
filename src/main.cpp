@@ -42,6 +42,8 @@ void sendTransaction() {
 
 void mineBlock() {
     std::cout << "Mining these blocks bro!";
+    Block newBlock = blockchain.mineBlock();
+    std::cout << "Block mined: " << newBlock.getHash() << std::endl;
     // For simplicity, let's assume mining automatically adds pending transactions to a new block.
     // Block newBlock = blockchain.mineBlock();
     // std::cout << "Block mined: " << newBlock.getHash() << std::endl;
