@@ -52,5 +52,22 @@ std::vector<Transaction> Wallet::getTransactions() {
     return transactions;
 }
 std::string Wallet::generateNewAddress() {
-    return "Your new address. mgjgrehg8h78hgre8";
+    //generate a new private key
+    std::string newPrivateKey = generateKeyPair();
+    // calc public key from private key
+    // hash public key using our calculateHash function
+    //  add a version byte and 4byte checksum
+    //encode results using base58?
+}
+
+EVP_PKEY* Wallet::generateKeyPair() {
+    EVP_PKEY *pkey;
+    //EVP_PKEY_RSA is not a vriable byt a constant defined in openssl, an identifier for the RSA algorithm
+    EVP_PKEY_CTX *pctx = EVP_PKEY_CTX_new_id(EVP_PKEY_RSA, NULL);
+    EVP_PKEY_keygen_init(pctx);
+    EVP_PKEY_CTX_set_rsa_keygen_bits(pctx, 2048);
+    EVP_PKEY_keygen(pctx, &pkey);
+    EVP_PKEY_CTX_free(pctx);
+
+    return pkey;
 }
