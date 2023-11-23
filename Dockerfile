@@ -2,7 +2,7 @@
 FROM gcc:latest
 
 # Set the working directory in the container to /app
-WORKDIR /app
+WORKDIR /app/src
 
 # Copy the current directory contents into the container at /app
 COPY . /app/src
@@ -19,6 +19,8 @@ RUN make -C /app/src
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
+
+RUN chmod +x food_coin_program
 
 # Run food_coin_program when the container launches
 CMD ["./food_coin_program"]

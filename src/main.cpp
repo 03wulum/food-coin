@@ -78,7 +78,7 @@ void runInProd() {
 }
 
 int main() {
-    bool isDev = true;
+    bool isDev = false;
     if(!isDev) {
         runInProd();
     } else {

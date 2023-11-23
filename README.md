@@ -6,4 +6,4 @@
 
 Build/run with docker
 	docker build -t food_coin_program .
-	docker run -it food_coin_program
+	docker run -it --rm -p 8080:80 food_coin_program
