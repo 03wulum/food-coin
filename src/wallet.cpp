@@ -55,8 +55,9 @@ std::string Wallet::generateNewAddress() {
     //generate a new private key
     std::string newPrivateKey = generateKeyPair();
     // calc public key from private key
-    std::String newPublicKey = generatePublicKey();
+    std::String newPublicKey = getPublicKey();
     // hash public key using our calculateHash function
+    
     //  add a version byte and 4byte checksum
     //encode results using base58?
 }
@@ -87,3 +88,20 @@ std::string Wallet::getPublicKey(EVP_PKEY *pkey) {
     return public_key_str;
 }
 
+std::string Wallet::encodeBase58(const std::string& str) {
+    BIO *b58 = BIO_new(BIO_f_base64());
+
+    BIO *bmem = BIO_new(BIO_s_mem());
+    b58 = BIO_push(b58, bmem);
+
+    BIO_write(b58, str.c_str, str.size());
+    BIO_flush(b58);
+
+    BUF_MEM *bptr;
+    BIO_get_mem_pter(b58, &bptr);
+    std::string encoded_str(bptr->data, bptr->length);
+
+    BIO_free_all(b58);
+
+    return encoded_str;
+}
