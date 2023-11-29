@@ -57,9 +57,12 @@ std::string Wallet::generateNewAddress() {
     // calc public key from private key
     std::String newPublicKey = getPublicKey();
     // hash public key using our calculateHash function
+    std::string hashedPublicKey = Block::calculateHash(newPublicKey)
     
     //  add a version byte and 4byte checksum
+     std::string versionAndChecksum = addVersionAndChecksum(hashedPublicKey);
     //encode results using base58?
+     std::string newAddress = encodeBase58(versionAndChecksum);
 }
 
 EVP_PKEY* Wallet::generateKeyPair() {
@@ -104,4 +107,17 @@ std::string Wallet::encodeBase58(const std::string& str) {
     BIO_free_all(b58);
 
     return encoded_str;
+}
+
+std::String Wallet:addVersionAndChecksum(const std::string& str) {
+    // add version byte, like bitcoin
+    std::string versionAndChecksum = "00" + str;
+
+    //calc checksum of versioned byte string
+    std::string checksum = calculateHash(versionAndChecksum).substr(0,8);
+
+    // append checksum
+    versionAndChecksum += checksum;
+
+    return versionAndChecksum;
 }
